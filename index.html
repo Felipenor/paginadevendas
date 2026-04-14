@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Vendas Profissional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary: #00aeff;
+            --secondary: #00c3ff;
+            --botão-fecha-do-formulario: #ff0000; 
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --footer-dark: #0066ff;
+            --form-background: #000000; 
+            --cor-dobotaox: #ff0000; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80') center/cover;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--light);
+            box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--light);
+            background: var(--secondary);
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 2rem 0;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(106, 192, 231, 0.3);
+        }
+
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section:nth-child(odd) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .faq-answer {
+            font-size: 1rem;
+            color: var(--light);
+            margin-top: 0.5rem;
+            line-height: 1.5;
+            display: none; 
+        }
+
+        .faq-item.active .faq-answer {
+            display: block; 
+        }
+
+        .price {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin: 2rem 0;
+        }
+
+        .footer {
+            background: var(--footer-dark);
+            color: var(--light);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer .footer-social-icons {
+            margin-top: 1rem;
+        }
+
+        .footer .social-icon {
+            margin: 0 10px;
+            color: var(--light);
+            font-size: 1.5rem;
+        }
+
+        .form-popup {
+            display: none; 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--form-background);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            width: 90%; 
+            max-width: 500px; 
+        }
+
+        .form-popup h2 {
+            margin-bottom: 1rem;
+            color: var(--light);
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-popup input, .form-popup textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-popup button {
+            width: 100%; 
+            background: #00ff00; 
+            color: var(--light);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close-button {
+            background: var(--botão-fecha-do-formulario) !important; 
+            color: white; 
+            font-weight: bold; 
+            border: none;
+            font-size: 1.5rem; 
+            cursor: pointer;
+            margin-left: 10px; 
+            padding: 0.5rem 1rem; 
+            border-radius: 5px; 
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .color-picker-button {
+            background: var(--footer-dark) !important;
+            color: var(--light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            width: auto;
+        }
+
+        .color-picker-button:hover {
+            opacity: 0.9;
+        }
+
+        #colorPicker {
+            display: none;
+        }
+
+        .selected-colors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .color-chip {
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: white;
+            text-shadow: 0 0 2px rgba(0,0,0,0.5);
+        }
+
+        .portfolio-slider-container {
+            position: relative;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            transition: background 0.3s;
+        }
+
+        .slider-arrow.prev {
+            left: 10px;
+        }
+
+        .slider-arrow.next {
+            right: 10px;
+        }
+
+        .slider-arrow:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .portfolio-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+        }
+
+        .portfolio-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .portfolio-slider::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .portfolio-slider::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .portfolio-item {
+            flex: 0 0 70%;
+            scroll-snap-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-item a {
+            color: var(--light);
+            text-decoration: none;
+            display: block;
+            padding: 2rem;
+        }
+
+        .portfolio-item h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-item p {
+            font-size: 1rem;
+            color: var(--light);
+        }
+
+        .terms-container {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .terms-container input {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-popup {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border-radius: 0;
+                padding: 10px;
+                overflow-y: auto;
+            }
+        }
+
+        @media (min-width:769px) {
+            .form-popup {
+                max-height: 90vh; 
+                overflow-y: auto;
+            }
+        }
+		
+        footer {
+            background-color: #111827;
+            padding: 2rem 0;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        .link-button {
+            background: #800080;
+            color: var(--light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .link-button:hover {
+            background: #9932cc;
+            transform: translateY(-3px);
+        }
+
+        .portfolio-page-btn {
+            background: #222;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            margin: 0 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+        }
+        .portfolio-page-btn.active, .portfolio-page-btn:hover {
+            background: var(--secondary);
+            color: #fff;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimcI6noK5T8fmHNj3vHVltdG_Do9q-jIJJIFG4GWVpHEgn-W99pkwpkkgzYjVzV-r2173_JwCAXH4yfe_c5-tnERreWNLf0A8SAbQxO45m8TiG1T0gWEvhatt3w1bCeTRuqg_WggHC_bdHGwEt4YU0h5w6AMsBAbvBcZfufzOxax4Iuh772pIyGWDFBQaE/s320/felipenor-profile.png" alt="Felipenor" style="width: 150px; border-radius: 50%; margin-bottom: 20px; box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);">
+            <h1 class="animate__animated animate__fadeInUp">🔥 Eu, <a href="https://linkbio.co/Felipenor" target="_blank">Felipenor</a>, Criarei Sua Página de Vendas! 🚀</h1>
+            <p class="animate__animated animate__fadeInUp">Você tem um produto ou serviço e gostaria de vender mais, mas não sabe criar um site?</p>
+            <p class="animate__animated animate__fadeInUp">Transforme seu negócio com uma página de vendas profissional feita por mim.</p>
+            <a href="https://mpago.la/1cyeqce" target="_blank" class="cta-button animate__animated animate__pulse animate__infinite">🔥 QUERO MINHA PÁGINA!</a>
+        </div>
+    </div>
+
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2>Exemplos de Sites Criados</h2>
+            <div class="portfolio-slider-container">
+                <button class="slider-arrow prev" onclick="moveSlide(-1)">&#10094;</button>
+                <div class="portfolio-slider">
+                    <div class="portfolio-item">
+                        <a href="https://felipenor.github.io/Excel-Expert/" target="_blank">
+                            <h3>🎓 Excel Expert</h3>
+                            <p>Curso especializado em Excel para profissionais</p>
+                        </a>
+                    </div>
+                    <div class="portfolio-item">
+                        <a href="https://felipenor.github.io/Aprenda-a-Programar-Programando" target="_blank">
+                            <h3>💻 Aprenda a Programar</h3>
+                            <p>Curso prático de programação do zero ao avançado</p>
+                        </a>
+                    </div>
+                    <div class="portfolio-item">
+                        <a href="https://felipenor.github.io/cardenaoenem/" target="_blank">
+                            <h3>📚 Cardenão Enem</h3>
+                            <p>Site para organização e estudos para o ENEM</p>
+                        </a>
+                    </div>
+                    <div class="portfolio-item">
+                        <a href="https://felipenor.github.io/curso-de-edicao-de-videos/" target="_blank">
+                            <h3>🎥 Curso de Edição de Vídeos</h3>
+                            <p>Aprenda a editar vídeos como um profissional</p>
+                        </a>
+                    </div>
+                    <div class="portfolio-item">
+                        <a href="https://felipenor.github.io/suamusica/" target="_blank">
+                            <h3>🎵 Sua Música Profissional</h3>
+                            <p>Site criado por Felipenor para vender músicas profissionais do zero. Eu, Felipenor, e meu amigo Lucas criaremos uma música original especialmente para você por apenas R$ 55!</p>
+                        </a>
+                    </div>
+                    <div class="portfolio-item">
+                        <a href="https://felipenor.github.io/botsdiscord/" target="_blank">
+                            <h3>🤖 Bots para Discord</h3>
+                            <p>Site criado por Felipenor para vender bots personalizados para Discord, feitos do zero especialmente para você!</p>
+                        </a>
+                    </div>
+                </div>
+                <button class="slider-arrow next" onclick="moveSlide(1)">&#10095;</button>
+                <div class="portfolio-pagination" id="portfolioPagination" style="text-align:center; margin-top: 15px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2>ESSA OFERTA É PARA VOCÊ QUE DESEJAR TER:</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>✨ Alta Conversão</h3>
+                    <p>Páginas de vendas otimizadas para converter visitantes em clientes.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>⚡ Rápido</h3>
+                    <p>Receba sua página em tempo recorde, sem complicação.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🎯 Personalizado</h3>
+                    <p>Criação de páginas totalmente personalizáveis, do seu jeito.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>📈 Estratégia de Vendas</h3>
+                    <p>Textos persuasivos que ajudam a maximizar suas vendas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2>Com minha criação, você ganha:</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>🌐 Hospedagem Grátis</h3>
+                    <p>Sem custos adicionais com hospedagem.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>⏱️ Mais Tempo</h3>
+                    <p>Tempo livre para focar em outras áreas do seu negócio.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>💰 Nova Renda</h3>
+                    <p>Venda mais com páginas que realmente convertem.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>📝 Copy Otimizada</h3>
+                    <p>Textos que vendem, escritos por mim.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2>Depoimentos de Clientes</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"Felipenor fez minha página de vendas em tempo recorde! A qualidade e a atenção aos detalhes são excepcionais!"</p>
+                    <strong>– Ana S., Empreendedora Digital</strong>
+                </div>
+                <div class="testimonial">
+                    <p>"A página que ele criou para mim superou todas as minhas expectativas. Vendas aumentaram rapidamente!"</p>
+                    <strong>– Lucas M., Lançador de Infoprodutos</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2>Oferta Especial</h2>
+            <div class="price">R$100</div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>🚀 Acesso Imediato</h3>
+                    <p>Comece a vender com sua nova página imediata.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🔒 Garantia</h3>
+                    <p>7 dias de garantia incondicional.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🎓 Suporte</h3>
+                    <p>Suporte técnico especializado para qualquer dúvida.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🎁 Bônus</h3>
+                    <p>Templates exclusivos inclusos na criação.</p>
+                </div>
+            </div>
+            <a href="https://mpago.la/1cyeqce" target="_blank" class="cta-button animate__animated animate__pulse animate__infinite">🔥 QUERO MINHA PÁGINA DE VENDAS!</a>
+        </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+        <div class="container">
+            <h2>Perguntas Frequentes</h2>
+            <div class="faq-item">
+                <div class="faq-question">Quanto tempo leva para criar minha página?</div>
+                <div class="faq-answer">
+                    O tempo de criação da sua página depende da complexidade do projeto e das informações fornecidas. 
+                    Geralmente, páginas simples podem ser entregues em até 3 dias úteis, enquanto projetos mais elaborados 
+                    podem levar até 7 dias. Trabalhamos com agilidade e atenção aos detalhes para garantir que você receba 
+                    um produto de alta qualidade no menor tempo possível.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Preciso ter conhecimento técnico?</div>
+                <div class="faq-answer">
+                    Não, você não precisa ter nenhum conhecimento técnico. Nós cuidamos de tudo para você, desde o design 
+                    até a configuração final. Basta nos fornecer as informações necessárias sobre o seu negócio, e nós 
+                    faremos o resto. Nosso objetivo é tornar o processo o mais simples e descomplicado possível para você.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Como funciona a hospedagem grátis?</div>
+                <div class="faq-answer">
+                    A hospedagem grátis significa que sua página será hospedada em nossos servidores sem nenhum custo adicional. 
+                    Isso elimina a necessidade de você contratar um serviço de hospedagem separado, economizando tempo e dinheiro. 
+                    Além disso, garantimos que sua página estará sempre online e funcionando perfeitamente.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Posso personalizar os templates?</div>
+                <div class="faq-answer">
+                    Sim, todos os templates são 100% personalizáveis. Você pode escolher as cores, fontes, imagens e até mesmo 
+                    o layout que melhor se adequa ao seu negócio. Nosso objetivo é criar uma página que reflita a identidade 
+                    da sua marca e atenda às suas necessidades específicas. Estamos aqui para transformar suas ideias em realidade.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <div class="container">
+            <div class="elementor-widget-wrap">
+                <div class="elementor-widget-container">
+                    <div class="elementor-text-editor elementor-clearfix">
+                        <a class="text-logo" href="https://felipenor.github.io/paginadevendas/" data-type="group" data-dynamic-mod="true"><span class="span12" style="font-weight: 300;"><img src="https://habbofont.net/font/plastic_playful/paginadevendas.gif" alt="Página De Vendas" href="#"></span></a>
+                        <div class="footer-social-icons" data-type="group" data-dynamic-mod="true">
+                            <a class="social-icon" href="https://facebook.com/felipenorlipe" target="_blank" rel="noopener">
+                                <i class="fa fa-facebook-official"></i>
+                            </a>
+                            <a class="social-icon" href="https://x.com/FelipenorWooz" target="_blank" rel="noopener">
+                                <i class="fa fa-twitter-square"></i>
+                            </a>
+                            <a class="social-icon" href="https://instagram.com/felipenor_wooz" target="_blank" rel="noopener">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a class="social-icon" href="https://twitch.tv/felipenor" target="_blank" rel="noopener">
+                                <i class="fa fa-twitch"></i>
+                            </a>
+                            <a class="social-icon" href="https://youtube.com/@Felipenor" target="_blank" rel="noopener">
+                                <i class="fa fa-youtube-square"></i>
+                            </a>
+                        </div>
+                        <p>Copyright © 2025 Página de Vendas Profissional All Rights Reserved. Criado por <a href="https://linkr.bio/Felipenor" target="_blank" rel="noopener">Felipenor</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-popup" id="infoForm">
+        <h2>Informações do Site <button class="close-button" onclick="document.getElementById('infoForm').style.display='none'">&times;</button></h2>
+        <form id="siteInfoForm" action="https://formspree.io/f/mvgkgkdo" method="POST" novalidate>
+            <label for="siteName">Qual será o nome do seu site?*</label>
+            <input type="text" id="siteName" name="siteName" placeholder="Digite aqui o nome do seu site" required>
+            
+            <label for="siteColors">Quais cores você gosta?*</label>
+            <div class="color-picker-container">
+                <input type="text" id="siteColors" name="siteColors" placeholder="Digite ou selecione as cores" required>
+                <input type="color" id="colorPicker">
+                <button type="button" class="color-picker-button" onclick="document.getElementById('colorPicker').click()">
+                    Escolher Cor
+                </button>
+            </div>
+            <div class="selected-colors" id="selectedColors"></div>
+            
+            <label for="sitePurpose">Sobre o que é o seu site ou serviços prestados?*</label>
+            <textarea id="sitePurpose" name="sitePurpose" rows="4" placeholder="Descreva aqui detalhadamente oque você deseja que eu faça no seu site sobre oque ele vai ser vai te algum vídeo foto ou venda de algum produto, curso ou serviço?" required></textarea>
+
+            <label for="email">Qual o seu e-mail? Digite o seu email para mim Felipenor lhe enviar o arquivo do seu site!</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="videoLinks">Você tem vídeos que deseja colocar no site? Se sim, insira os links:</label>
+            <textarea type="text" id="videoLinks" name="videoLinks" placeholder="Digite aqui os links dos vídeos exemplo: https://www.youtube.com/watch?v=FARIcItBrBU e https://www.twitch.tv/felipenor"></textarea>
+            
+            <label for="imageLinks">Você tem imagens? Se sim, insira os links das imagens:</label>
+            <input type="text" id="imageLinks" name="imageLinks">
+
+            <label for="domain">Você tem um domínio (link próprio)?</label>
+            <button type="button" class="link-button" onclick="window.open('https://habbobluehost.epizy.com/hospedagem-web/', '_blank')">
+                Comprar Domínio
+            </button>
+            <input type="link" id="domain" name="domain" placeholder="Digite aqui o seu domínio ou deixe em branco se não tiver">
+
+            <label for="pergunta1">Para o Felipenor realmente fazer o seu site comprove que você fez a compra colando abaixo o link do print do comprovante de pagamento!</label>
+            <input type="text" id="pergunta1" name="pergunta1" placeholder="Cole aqui o link do print do comprovante de pagamento" required>
+
+            <label for="pergunta2">Digite abaixo o nome de quem te indicou o site!</label>
+            <textarea id="pergunta2" name="pergunta2" rows="4" placeholder="Deixe vazio caso você tenha vindo por uma divulgação do próprio Felipenor ou selecione Felipenor a opção abaixo"></textarea>
+            <select id="indicacao" name="indicacao">
+                <option value="" disabled selected>Ou Selecione uma opção</option>
+                <option value="Felipenor">Felipenor</option>
+                <option value="WaferKon">WaferKon</option>
+                <option value="Ramono">Ramono</option>
+                <option value="Felipenor">Extreme_SL</option>
+            </select>
+
+            <br>
+
+            <label for="paymentMethod">Como você deseja receber o pagamento dessa sua página de vendas que o Felipenor irá fazer?</label>
+            <select id="paymentMethod" name="paymentMethod" onchange="handlePaymentMethodChange()">
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="pix">Pix</option>
+                <option value="livepix">LivePix</option>
+                <option value="paypal">PayPal</option>
+                <option value="outro-link">Outro qual ? Digite abaixo</option>
+            </select>
+
+            <div id="pixFields" style="display: none; margin-top: 10px;">
+                <label for="pixKeyType">Selecione o tipo de chave Pix:</label>
+                <select id="pixKeyType" name="pixKeyType" required>
+                    <option value="" disabled selected>Selecione o tipo de chave</option>
+                    <option value="cpf">CPF</option>
+                    <option value="cnpj">CNPJ</option>
+                    <option value="email">E-mail</option>
+                    <option value="phone">Telefone</option>
+                    <option value="random">Chave Aleatória</option>
+                </select>
+                <label for="pixKey">Digite sua chave Pix:</label>
+                <input type="text" id="pixKey" name="pixKey" placeholder="Digite sua chave Pix">
+            </div>
+
+            <div id="livepixField" style="display: none; margin-top: 10px;">
+                <label for="livepixLink">Digite o link do LivePix:</label>
+                <input type="text" id="livepixLink" name="livepixLink" placeholder="Digite o link do LivePix">
+            </div>
+
+            <div id="paypalField" style="display: none; margin-top: 10px;">
+                <label for="paypalEmail">Digite o e-mail do PayPal:</label>
+                <input type="email" id="paypalEmail" name="paypalEmail" placeholder="Digite o e-mail do PayPal">
+            </div>
+
+            <div id="outroLinkField" style="display: none; margin-top: 10px;">
+                <label for="outroLink">Digite qual outro método de pagamento você deseja:</label>
+                <input type="text" id="outroLink" name="outroLink" placeholder="Digite aqui o método de pagamento desejado">
+            </div>
+
+            <div class="terms-container">
+                <label>
+                    <label for="terms-container">Leia os termos e condições abaixo!</label>
+                    <input type="checkbox" id="acceptTerms" required>
+                    "Declaro estar ciente e de pleno acordo que, ao aceitar este termo, autorizo o início imediato da produção de um produto digital personalizado e, por isso, abro mão do direito de arrependimento e reembolso, conforme previsto no Código de Defesa do Consumidor (Art. 49). Reconheço que eu teria direito ao arrependimento em até 7 dias, porém, ao aceitar este termo, renuncio expressamente a esse direito. Estou plenamente consciente de que, por se tratar de conteúdo digital entregue manualmente e sem possibilidade de devolução, não poderei solicitar reembolso sob nenhuma circunstância após o início da produção."
+                </label>
+            </div>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            document.getElementById('infoForm').style.display = 'block';
+        });
+
+        document.querySelectorAll('.cta-button')[1].addEventListener('click', function() {
+            document.getElementById('infoForm').style.display = 'block';
+        });
+
+        const colorPicker = document.getElementById('colorPicker');
+        const siteColors = document.getElementById('siteColors');
+        const selectedColors = document.getElementById('selectedColors');
+
+        colorPicker.addEventListener('change', function(e) {
+            const color = e.target.value.toUpperCase();
+            const currentColors = siteColors.value.split(',').map(c => c.trim()).filter(c => c);
+            
+            if (!currentColors.includes(color)) {
+                if (currentColors.length > 0) {
+                    siteColors.value = currentColors.join(', ') + ', ' + color;
+                } else {
+                    siteColors.value = color;
+                }
+                
+                const chip = document.createElement('span');
+                chip.className = 'color-chip';
+                chip.style.backgroundColor = color;
+                chip.textContent = color;
+                selectedColors.appendChild(chip);
+            }
+        });
+
+        document.getElementById('siteInfoForm').addEventListener('submit', function(event) {
+            // Removido o alert e o fechamento do popup para não interferir no envio do formulário
+            // O Formspree irá redirecionar para a página de sucesso automaticamente
+        });
+
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        function handlePaymentMethodChange() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            // Esconde todos os campos adicionais
+            document.getElementById('pixFields').style.display = 'none';
+            document.getElementById('livepixField').style.display = 'none';
+            document.getElementById('paypalField').style.display = 'none';
+            document.getElementById('outroLinkField').style.display = 'none';
+
+            // Exibe os campos com base na opção selecionada
+            if (paymentMethod === 'pix') {
+                document.getElementById('pixFields').style.display = 'block';
+            } else if (paymentMethod === 'livepix') {
+                document.getElementById('livepixField').style.display = 'block';
+            } else if (paymentMethod === 'paypal') {
+                document.getElementById('paypalField').style.display = 'block';
+            } else if (paymentMethod === 'outro-link') {
+                document.getElementById('outroLinkField').style.display = 'block';
+            }
+        }
+
+        let currentIndex = 0;
+
+        function moveSlide(direction) {
+            const slider = document.querySelector('.portfolio-slider');
+            const items = document.querySelectorAll('.portfolio-item');
+            const totalItems = items.length;
+
+            currentIndex += direction;
+
+            if (currentIndex >= totalItems) {
+                currentIndex = 0;
+            }
+
+            if (currentIndex < 0) {
+                currentIndex = totalItems - 1;
+            }
+
+            const scrollPosition = items[currentIndex].offsetLeft - (slider.offsetWidth - items[currentIndex].offsetWidth) / 2;
+
+            slider.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+            renderPortfolioPagination();
+        }
+
+        function renderPortfolioPagination() {
+            const items = document.querySelectorAll('.portfolio-item');
+            const pagination = document.getElementById('portfolioPagination');
+            pagination.innerHTML = '';
+            items.forEach((item, idx) => {
+                const btn = document.createElement('button');
+                btn.textContent = idx + 1;
+                btn.className = 'portfolio-page-btn' + (idx === currentIndex ? ' active' : '');
+                btn.onclick = function() {
+                    goToSlide(idx);
+                };
+                pagination.appendChild(btn);
+            });
+        }
+
+        function goToSlide(idx) {
+            const slider = document.querySelector('.portfolio-slider');
+            const items = document.querySelectorAll('.portfolio-item');
+            currentIndex = idx;
+            const scrollPosition = items[currentIndex].offsetLeft - (slider.offsetWidth - items[currentIndex].offsetWidth) / 2;
+            slider.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+            renderPortfolioPagination();
+        }
+
+        const slider = document.querySelector('.portfolio-slider');
+        let autoSlideInterval;
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                moveSlide(1);
+            }, 5000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        slider.addEventListener('mouseover', stopAutoSlide);
+        slider.addEventListener('mouseout', startAutoSlide);
+
+        startAutoSlide();
+    </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/67d6083a39faa519084f5c5d/1ime109rf';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>
